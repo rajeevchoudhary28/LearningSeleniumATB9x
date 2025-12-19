@@ -4,7 +4,9 @@ import io.qameta.allure.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TestSelenium19 {
@@ -14,21 +16,39 @@ public class TestSelenium19 {
 
     public void test_negative_vwo_login() throws Exception {
 
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://app.vwo.com/#/login");
-        driver.manage().window().maximize();
+        EdgeOptions edgeOptions = new EdgeOptions();
+        edgeOptions.addArguments("--start-maximized");
 
-        // <a href="https://vwo.com/free-trial/?utm_medium=website&amp;utm_source=login-page&amp;utm_campaign=mof_eg_loginpage"
-        // class="text-link Td(n) Whs(nw)" data-qa="bericafeqo"
-        // vwo-html-translate="login:startFreeTrial">
-        // Start a free trial</a>
 
-        //WebElement a_tag_free_trial = driver.findElement(By.linkText("Start a free trial"));
-        //a_tag_free_trial.click();
+        WebDriver driver = new EdgeDriver(edgeOptions);
+        driver.get("https://vwo.com/free-trial");
 
         // Partial match
         WebElement a_tag_free_trial = driver.findElement(By.partialLinkText("free trial"));
         a_tag_free_trial.click();
+
+        //
+        WebElement email = driver.findElement(By.id("page-v1-step1-email"));
+        email.sendKeys("1234@1gggg.com");
+
+        WebElement check_box_policy = driver.findElement(By.name("gdpr_consent_checkbox"));
+        check_box_policy.click();
+
+        List<WebElement> buttonList = driver.findElement(By.tagName("button"));
+        buttonList.get(0).click();
+
+        // <div
+        // class="C($color-red) Fz($font-size-12) Trsp($Op) Trsdu(0.25s) Op(0) invalid-input+Op(1) invalid-reason">
+        // The email address you entered is incorrect.
+        // </div>
+
+        WebElement error_message = driver.findElement(By.className("invalid-reason"));
+
+        Assert.assertEquals(error_message.getText(), "The email address you entered is incorrect.");
+
+
+
+
 
         Thread.sleep(15000);
         driver.quit();

@@ -13,7 +13,7 @@ public class testselenium {
     public void test_selenium(){
 
         WebDriver driver = new ChromeDriver();
-        driver.get("https://lifesciences-qa.acgi.in/");
+        driver.get("https://google.com");
         driver.manage().window().maximize();
 
     }
