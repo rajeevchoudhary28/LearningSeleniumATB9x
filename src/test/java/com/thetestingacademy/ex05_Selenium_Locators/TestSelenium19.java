@@ -34,8 +34,8 @@ public class TestSelenium19 {
         WebElement check_box_policy = driver.findElement(By.name("gdpr_consent_checkbox"));
         check_box_policy.click();
 
-        List<WebElement> buttonList = driver.findElement(By.tagName("button"));
-        buttonList.get(0).click();
+        //List<WebElement> buttonList = driver.findElement(By.tagName("button"));
+        //buttonList.get(0).click();
 
         // <div
         // class="C($color-red) Fz($font-size-12) Trsp($Op) Trsdu(0.25s) Op(0) invalid-input+Op(1) invalid-reason">
